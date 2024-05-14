@@ -7,9 +7,7 @@ import { JSX } from "preact"
 import style from "./styles/contentMeta.scss"
 
 interface ContentMetaOptions {
-  /**
-   * Whether to display reading time
-   */
+  // Whether to display estimated reading time
   showReadingTime: boolean
   showComma: boolean
 }
@@ -27,13 +25,15 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
     const text = fileData.text
 
     if (text) {
+      // HTML elements to be displayed
       const segments: (string | JSX.Element)[] = []
 
+      // Display date(s)
       if (fileData.dates) {
-        segments.push(formatDate(getDate(cfg, fileData)!, cfg.locale))
+        segments.push(`Entry created: ${formatDate(getDate(cfg, fileData)!, cfg.locale)}`)
       }
 
-      // Display reading time if enabled
+      // Display estimated reading time if enabled
       if (options.showReadingTime) {
         const { minutes, words: _words } = readingTime(text)
         const displayedTime = i18n(cfg.locale).components.contentMeta.readingTime({
@@ -42,7 +42,8 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
         segments.push(displayedTime)
       }
 
-      const segmentsElements = segments.map((segment) => <span>{segment}</span>)
+      // Display computed segment elements in order
+      const segmentsElements = segments.map((segment) => <span>{segment}<br/></span>)
 
       return (
         <p show-comma={options.showComma} class={classNames(displayClass, "content-meta")}>
