@@ -25,7 +25,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.PageTitle(),
     Component.RecentNotes({ title: "Recent entries", limit: 3 }),
     Component.MobileOnly(Component.Spacer()),
-    Component.DesktopOnly(Component.Explorer()),
+    Component.DesktopOnly(Component.Explorer({ title: "Discoverer" })),
   ],
   right: [
     Component.Darkmode(),
@@ -46,7 +46,7 @@ export const defaultListPageLayout: PageLayout = {
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
-    Component.DesktopOnly(Component.Explorer()),
+    Component.DesktopOnly(Component.Explorer({ title: "Discoverer" })),
   ],
   right: [
     Component.Darkmode(),
