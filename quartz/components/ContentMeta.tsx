@@ -9,11 +9,14 @@ import style from "./styles/contentMeta.scss"
 interface ContentMetaOptions {
   // Whether to display estimated reading time
   showReadingTime: boolean
+  // Whether to display note's last modified date
+  showModifiedDate: boolean
   showComma: boolean
 }
 
 const defaultOptions: ContentMetaOptions = {
   showReadingTime: true,
+  showModifiedDate: false,
   showComma: true,
 }
 
@@ -30,7 +33,10 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
       // Display date(s)
       if (fileData.dates) {
-        segments.push(`Entry created: ${formatDate(getDate(cfg, fileData)!, cfg.locale)}`)
+        segments.push(`Planted: ${formatDate(getDate(cfg, fileData)!, cfg.locale)}`)
+        if (options.showModifiedDate) {
+          segments.push(`Last watered: ${formatDate(fileData.dates.modified, cfg.locale)}`)
+        }
       }
 
       // Display estimated reading time if enabled
