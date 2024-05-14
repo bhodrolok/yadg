@@ -23,12 +23,13 @@ export const defaultContentPageLayout: PageLayout = {
   ],
   left: [
     Component.PageTitle(),
+    Component.RecentNotes({ title: "Recent entries", limit: 3 }),
     Component.MobileOnly(Component.Spacer()),
-    Component.Search(),
-    Component.Darkmode(),
     Component.DesktopOnly(Component.Explorer()),
   ],
   right: [
+    Component.Darkmode(),
+    Component.Search(),
     Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
@@ -37,13 +38,19 @@ export const defaultContentPageLayout: PageLayout = {
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [
+    Component.Breadcrumbs(), 
+    Component.ArticleTitle(), 
+    Component.ContentMeta()
+  ],
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
-    Component.Search(),
-    Component.Darkmode(),
     Component.DesktopOnly(Component.Explorer()),
   ],
-  right: [],
+  right: [
+    Component.Darkmode(),
+    Component.Search(),
+    Component.RecentNotes({ title: "Recent entries", limit: 6 }),
+  ],
 }
