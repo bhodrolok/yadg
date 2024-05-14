@@ -1,0 +1,60 @@
+# Reference: https://github.com/actions/starter-workflows/blob/main/pages/static.yml
+name: Deploy generated static site to GitHub Pages
+run-name: ${{ github.actor }}triggered a ${{ github.event_name }}!
+
+# Triggers
+on:
+    # Pushes targetting the main and ci-setup branches
+    push:
+        branches:
+            - main
+    # Also manually
+    workflow_dispatch:
+
+# GITHUB_TOKEN 
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+# 1 concurrent deployment without cancelling runs in-progress
+concurrency:
+    group: "pages"
+    cancel-in-progress: false
+
+# To be run
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code so the workflow can be accessed
+              uses: actions/checkout@v4.1.1
+              with:
+                fetch-depth: 0 # Fetch all history for git info
+
+            - name: Set up Node version
+              uses: actions/setup-node@v4.0.2
+              with:
+                  node-version: 18.14
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build Quartz project
+              run: npx quartz build
+                
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v3.0.1
+              with:
+                path: public
+ 
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
