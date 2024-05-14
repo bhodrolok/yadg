@@ -17,7 +17,7 @@ interface ContentMetaOptions {
 const defaultOptions: ContentMetaOptions = {
   showReadingTime: true,
   showModifiedDate: false,
-  showComma: true,
+  showComma: false,
 }
 
 export default ((opts?: Partial<ContentMetaOptions>) => {
