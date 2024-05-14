@@ -19,11 +19,18 @@ export function getDate(cfg: GlobalConfiguration, data: QuartzPluginData): Date 
 }
 
 export function formatDate(d: Date, locale: ValidLocale = "en-US"): string {
-  return d.toLocaleDateString(locale, {
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+  // https://stackoverflow.com/a/72052408
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+    day: "numeric",
+    month: "long",
     year: "numeric",
-    month: "short",
-    day: "2-digit",
-  })
+    hour: "numeric",
+    minute: "numeric",
+    // timeZoneName: "short",
+  };
+  return d.toLocaleDateString(locale, dateOptions)
 }
 
 export function Date({ date, locale }: Props) {
