@@ -16,7 +16,7 @@ export const sharedPageComponents: SharedLayout = {
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
-    Component.Breadcrumbs(),
+    Component.Breadcrumbs({ spacerSymbol: "-->", rootName: "Gate" }),
     Component.ArticleTitle(),
     Component.ContentMeta({ showReadingTime: false, showModifiedDate: true }),
     Component.TagList(),
@@ -39,7 +39,7 @@ export const defaultContentPageLayout: PageLayout = {
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [
-    Component.Breadcrumbs(), 
+    Component.Breadcrumbs({ spacerSymbol: "-->", rootName: "Gate" }), 
     Component.ArticleTitle(), 
     Component.ContentMeta({ showReadingTime: false }),
   ],
